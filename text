@@ -1,0 +1,59 @@
+Idea Title
+In-House Intelligent Rules Engine for  Finance Collections and Enterprise Decisioning
+
+Idea Description
+Currently in  Finance collections, we are using CGI Strata for risk scoring of collection accounts. Along with that, we also have another application running separately to execute a different set of rules for account treatment, routing, and other business actions.
+
+This creates dependency on multiple systems, additional cost, maintenance effort, and complexity for users. The idea is to build an in-house intelligent rules engine that can replace these separate rule-processing platforms and bring risk scoring, account treatment rules, routing logic, and business decision rules into one common user-friendly platform.
+
+This platform will support no-code / low-code rule configuration, so business and technology teams can create, update, test, and deploy rules with less dependency on full application code changes. During the decision process, the system can also call AI services, bank APIs, and approved external APIs to enrich the decision with real-time data, predictions, summaries, risk signals, or recommendation outputs.
+
+Starting with Auto Finance collections, this can later become a reusable enterprise decisioning platform across the bank.
+
+Problem We Are Addressing
+Today, Auto Finance collections depends on CGI Strata for risk scoring and another application for account treatment rules. Rules are spread across multiple platforms, and users have to depend on different systems and technical teams for changes, analysis, and validation.
+
+This creates challenges like vendor cost, duplicate applications, longer rule-change cycles, limited flexibility, and less visibility into why a particular account received a specific treatment.
+
+Traditional rules engines are also limited because they only execute static rules. But many modern banking decisions need more context. For example, the decision may need customer history, payment behavior, risk score, hardship indicators, recent interactions, AI-generated insights, or real-time API data.
+
+Impact of the Idea
+This idea can directly save cost for Auto Finance by reducing or eliminating dependency on CGI Strata and other duplicate rule execution applications. It will also create an in-house capability that is easier to maintain, more transparent, and more flexible for future business needs.
+
+The intelligent rules engine can improve speed, consistency, and accuracy of collections decisioning. It can help users understand the rule outcome, supporting data, and reason behind the treatment. Since it supports no-code / low-code configuration, rule changes can be faster and less expensive.
+
+The ability to connect with AI and APIs will make the platform future-ready. It can combine business rules with AI insights and real-time data, while still keeping proper governance, audit, and approval controls.
+
+How This Will Save Auto Finance
+This will help Auto Finance by:
+
+Reducing or removing CGI Strata vendor cost
+Avoiding multiple applications for similar rule execution
+Combining risk scoring and account treatment rules in one place
+Reducing code changes for rule updates through no-code / low-code configuration
+Making rule management more user-friendly
+Allowing AI and API calls during decisioning for smarter outcomes
+Improving visibility into why an account got a specific treatment
+Reducing manual review and support effort
+Improving compliance through audit trail and decision history
+Building an in-house platform with no additional product licensing cost
+How This Can Be Generic Across the Bank
+The platform can be designed as a reusable enterprise decisioning layer. Any team that uses rule-based decisions can configure their own rules, workflows, API calls, and AI-assisted decision steps.
+
+It can be used across:
+
+Auto Finance collections
+Credit card collections
+Mortgage collections
+Personal loan collections
+Fraud checks
+Customer service routing
+Account servicing eligibility
+Fee waiver eligibility
+Credit policy checks
+Risk and compliance validations
+Operations workflow routing
+This means the bank can move away from multiple separate rule tools and build one common in-house decisioning platform that is scalable, configurable, and cost-effective.
+
+Suggested Tags
+Auto Finance Collections, Intelligent Rules Engine, No-Code, Low-Code, AI Integration, API Integration, CGI Strata Replacement, Risk Scoring, Account Treatment, Vendor Cost Saving, Decision Automation, In-House Platform, Enterprise Reusability, Banking Innovation
