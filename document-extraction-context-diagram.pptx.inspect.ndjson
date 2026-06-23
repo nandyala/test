@@ -1,0 +1,57 @@
+{"kind":"deck","id":"pr/ywaksy","name":"Deck"}
+{"kind":"layout","layoutId":"11257fa0-7728-4c46-a4b7-59a570ffe3a3","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"654af9ec-559f-4ef4-acba-c4dcdeaf169e","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/tc8yw9","slide":1,"title":"CONTEXT DIAGRAM","textShapes":28}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":1,"text":"CONTEXT DIAGRAM","textPreview":"CONTEXT DIAGRAM","textChars":15,"textLines":1,"bbox":[52.8,26.8,864,28]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":1,"text":"Intelligent Document Extraction Context","textPreview":"Intelligent Document Extraction Context","textChars":39,"textLines":1,"bbox":[52.8,49.8,864,62]}
+{"kind":"textbox","id":"sh/a1gvy90j","slide":1,"text":"High-level system boundary for scanned PDF/TIFF ingestion, AI extraction, validation, review, and canonical JSON publishing.","textPreview":"High-level system boundary for scanned PDF/TIFF ingestion, AI extraction, validation, review, and canonical JSON publishing.","textChars":124,"textLines":1,"bbox":[52.8,106,820,28]}
+{"kind":"shape","id":"sh/hgn29gr2","slide":1,"bbox":[174,205,76,0]}
+{"kind":"shape","id":"sh/svu9knih","slide":1,"bbox":[174,331,76,0]}
+{"kind":"shape","id":"sh/za1gvy90","slide":1,"bbox":[710,205,76,0]}
+{"kind":"shape","id":"sh/ap4r65wj","slide":1,"bbox":[710,331,76,0]}
+{"kind":"shape","id":"sh/h4byhgn2","slide":1,"bbox":[424,383,0,55]}
+{"kind":"shape","id":"sh/sji5snel","slide":1,"bbox":[536,383,0,55]}
+{"kind":"shape","id":"sh/qh0fepkz","slide":1,"bbox":[536,438,0,-55]}
+{"kind":"shape","id":"sh/j2t83itg","slide":1,"bbox":[640,438,0,-55]}
+{"kind":"shape","id":"sh/8nqxs72x","slide":1,"bbox":[52.8,162,122,86]}
+{"kind":"textbox","id":"sh/18jqh0fe","slide":1,"text":"Business Channels","textPreview":"Business Channels","textChars":17,"textLines":1,"bbox":[60.8,170,106,34]}
+{"kind":"textbox","id":"sh/q5o7qpg3","slide":1,"text":"Portal, batch, email, API","textPreview":"Portal, batch, email, API","textChars":25,"textLines":1,"bbox":[62.8,206,102,36]}
+{"kind":"shape","id":"sh/jqh0fepk","slide":1,"bbox":[52.8,288,122,86]}
+{"kind":"textbox","id":"sh/8bat47y1","slide":1,"text":"Historical Docs","textPreview":"Historical Docs","textChars":15,"textLines":1,"bbox":[60.8,296,106,34]}
+{"kind":"textbox","id":"sh/1w7mp0bi","slide":1,"text":"Samples and labels for training","textPreview":"Samples and labels for training","textChars":31,"textLines":1,"bbox":[62.8,332,102,36]}
+{"kind":"shape","id":"sh/uxc3ylc7","slide":1,"bbox":[250,145,460,238]}
+{"kind":"textbox","id":"sh/ji5snelo","slide":1,"text":"Spring Boot Document Extraction Platform","textPreview":"Spring Boot Document Extraction Platform","textChars":40,"textLines":1,"bbox":[272,158,416,26]}
+{"kind":"shape","id":"sh/bat47y1k","slide":1,"bbox":[278,205,116,82]}
+{"kind":"textbox","id":"sh/mp0bi9s3","slide":1,"text":"Ingestion API","textPreview":"Ingestion API","textChars":13,"textLines":1,"bbox":[286,213,100,34]}
+{"kind":"textbox","id":"sh/tgfmlkjm","slide":1,"text":"Upload, job ID, status","textPreview":"Upload, job ID, status","textChars":22,"textLines":1,"bbox":[288,249,96,32]}
+{"kind":"shape","id":"sh/4vmtwra5","slide":1,"bbox":[422,205,116,82]}
+{"kind":"textbox","id":"sh/bm58z25k","slide":1,"text":"Orchestrator","textPreview":"Orchestrator","textChars":12,"textLines":1,"bbox":[430,213,100,34]}
+{"kind":"textbox","id":"sh/m1cfa9w3","slide":1,"text":"Classify, route, extract","textPreview":"Classify, route, extract","textChars":24,"textLines":1,"bbox":[432,249,96,32]}
+{"kind":"shape","id":"sh/tsvu9kni","slide":1,"bbox":[566,205,116,82]}
+{"kind":"textbox","id":"sh/47y1kre1","slide":1,"text":"Normalize","textPreview":"Normalize","textChars":9,"textLines":1,"bbox":[574,213,100,34]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":1,"text":"Schema, dates, amounts","textPreview":"Schema, dates, amounts","textChars":22,"textLines":1,"bbox":[576,249,96,32]}
+{"kind":"shape","id":"sh/m58z25kb","slide":1,"bbox":[350,310,116,58]}
+{"kind":"textbox","id":"sh/w7mp0bi9","slide":1,"text":"Validate","textPreview":"Validate","textChars":8,"textLines":1,"bbox":[358,318,100,34]}
+{"kind":"textbox","id":"sh/psfil0rq","slide":1,"text":"Required fields and confidence","textPreview":"Required fields and confidence","textChars":30,"textLines":1,"bbox":[360,354,96,8]}
+{"kind":"shape","id":"sh/e1w7mp0b","slide":1,"bbox":[494,310,116,58]}
+{"kind":"textbox","id":"sh/7mp0bi9s","slide":1,"text":"Review Queue","textPreview":"Review Queue","textChars":12,"textLines":1,"bbox":[502,318,100,34]}
+{"kind":"textbox","id":"sh/wval87ed","slide":1,"text":"Low confidence items","textPreview":"Low confidence items","textChars":20,"textLines":1,"bbox":[504,354,96,8]}
+{"kind":"shape","id":"sh/pg3ex0nu","slide":1,"bbox":[394,246,28,0]}
+{"kind":"shape","id":"sh/epkzupwb","slide":1,"bbox":[538,246,28,0]}
+{"kind":"shape","id":"sh/7adsji5s","slide":1,"bbox":[624,287,-72,23]}
+{"kind":"shape","id":"sh/wra5gbq1","slide":1,"bbox":[480,287,-72,23]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":1,"bbox":[786,162,122,86]}
+{"kind":"textbox","id":"sh/h0fepkzu","slide":1,"text":"Azure AI Document Intelligence","textPreview":"Azure AI Document Intelligence","textChars":30,"textLines":1,"bbox":[794,170,106,34]}
+{"kind":"textbox","id":"sh/sfil0rqd","slide":1,"text":"Classifier + neural extractors","textPreview":"Classifier + neural extractors","textChars":30,"textLines":1,"bbox":[796,206,102,36]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":1,"bbox":[786,288,122,86]}
+{"kind":"textbox","id":"sh/a9w3m94f","slide":1,"text":"Downstream Systems","textPreview":"Downstream Systems","textChars":18,"textLines":1,"bbox":[794,296,106,34]}
+{"kind":"textbox","id":"sh/hcrmhk3q","slide":1,"text":"Disputes, insurance, claims, CRM","textPreview":"Disputes, insurance, claims, CRM","textChars":32,"textLines":1,"bbox":[796,332,102,36]}
+{"kind":"shape","id":"sh/orytsvu9","slide":1,"bbox":[298,438,252,64]}
+{"kind":"textbox","id":"sh/z61032ls","slide":1,"text":"Data Stores","textPreview":"Data Stores","textChars":11,"textLines":1,"bbox":[306,446,236,34]}
+{"kind":"textbox","id":"sh/al87ed8b","slide":1,"text":"Blob, database, audit, model version","textPreview":"Blob, database, audit, model version","textChars":36,"textLines":1,"bbox":[308,482,232,14]}
+{"kind":"shape","id":"sh/hk3q5o7q","slide":1,"bbox":[578,438,252,64]}
+{"kind":"textbox","id":"sh/oza1gvy9","slide":1,"text":"Model + Schema Registry","textPreview":"Model + Schema Registry","textChars":23,"textLines":1,"bbox":[586,446,236,34]}
+{"kind":"textbox","id":"sh/idonyd0z","slide":1,"text":"Doc types, field schema, thresholds, model IDs","textPreview":"Doc types, field schema, thresholds, model IDs","textChars":46,"textLines":1,"bbox":[588,482,232,14]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":1,"text":"Runtime flow: document arrives -> platform classifies and extracts -> validates confidence -> publishes canonical JSON.","textPreview":"Runtime flow: document arrives -> platform classifies and extracts -> validates confidence -> publishes canonical JSON.","textChars":119,"textLines":1,"bbox":[52.8,508,854,22]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":1,"text":"Feedback path: corrections and labels improve model versions.","textPreview":"Feedback path: corrections and labels improve model versions.","textChars":61,"textLines":1,"bbox":[560,404,330,22]}
+{"kind":"notes","id":"nt/tc8yw9","slide":1,"text":""}

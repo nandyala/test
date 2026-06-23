@@ -1,0 +1,103 @@
+<mxfile host="app.diagrams.net" modified="2026-06-22T00:00:00.000Z" agent="Codex" version="26.0.0" type="device">
+  <diagram id="poc-architecture" name="POC Architecture">
+    <mxGraphModel dx="1600" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="950" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="eyebrow" value="AZURE + SPRING BOOT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#3B6FD8;" vertex="1" parent="1">
+          <mxGeometry x="90" y="65" width="320" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="title" value="POC Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontStyle=1;fontColor=#17225C;" vertex="1" parent="1">
+          <mxGeometry x="90" y="95" width="520" height="58" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="channels" value="Channels&#xa;Scanned PDF / TIFF&#xa;upload (REST)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="90" y="265" width="180" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ingestion" value="Ingestion API&#xa;Spring Boot&#xa;job ID returned, async processing" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="340" y="255" width="200" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="blob" value="Blob Storage&#xa;raw documents&#xa;training samples" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="625" y="205" width="205" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="bus" value="Service Bus&#xa;processing queue&#xa;retry + DLQ" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="625" y="355" width="205" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="worker" value="Extraction Worker&#xa;Spring Boot consumer&#xa;state machine per document" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="915" y="255" width="225" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="results" value="Results&#xa;JSON + status API&#xa;canonical output" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="255" width="190" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ai" value="Azure AI Document Intelligence&#xa;Custom classification model  +  custom neural extraction model per doc type&#xa;Classifier returns doc type/page ranges; extractor returns fields and confidence" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#1F2867;strokeColor=#1F2867;fontSize=16;fontStyle=1;fontColor=#FFFFFF;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="420" y="565" width="470" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db" value="Database&#xa;document status, extracted fields, confidences, audit trail, model version used" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="955" y="570" width="225" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="review" value="Review&#xa;low-confidence queue&#xa;corrections captured for retraining" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="570" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="schema" value="Model + Schema Registry&#xa;doc type definitions, canonical field schema, confidence thresholds, active Azure model IDs" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#F5F7FF;strokeColor=#B8CCF6;fontSize=15;fontStyle=1;fontColor=#17225C;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="950" y="735" width="540" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="flowNote" value="Flow: upload → blob + queue → worker calls Document Intelligence (classify, then extract) → normalize/validate → persist → low-confidence items routed to review." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#17225C;" vertex="1" parent="1">
+          <mxGeometry x="90" y="850" width="1420" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;" edge="1" parent="1" source="channels" target="ingestion">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;" edge="1" parent="1" source="ingestion" target="blob">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;" edge="1" parent="1" source="ingestion" target="bus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;" edge="1" parent="1" source="bus" target="worker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;" edge="1" parent="1" source="worker" target="results">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="classify + extract" style="endArrow=block;html=1;rounded=0;strokeColor=#1F2867;strokeWidth=2;fontColor=#1F2867;fontSize=12;" edge="1" parent="1" source="worker" target="ai">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="raw fields + confidence" style="endArrow=block;html=1;rounded=0;strokeColor=#1F2867;strokeWidth=2;fontColor=#1F2867;fontSize=12;" edge="1" parent="1" source="ai" target="worker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="persist state + audit" style="endArrow=block;html=1;rounded=0;strokeColor=#17225C;strokeWidth=2;fontColor=#17225C;fontSize=12;" edge="1" parent="1" source="worker" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="low confidence" style="endArrow=block;html=1;rounded=0;strokeColor=#3B6FD8;strokeWidth=2;fontColor=#17225C;fontSize=12;" edge="1" parent="1" source="db" target="review">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="schema + thresholds" style="endArrow=block;html=1;rounded=0;strokeColor=#3B6FD8;strokeWidth=2;fontColor=#17225C;fontSize=12;" edge="1" parent="1" source="schema" target="worker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="model ids" style="endArrow=block;html=1;rounded=0;strokeColor=#3B6FD8;strokeWidth=2;fontColor=#17225C;fontSize=12;" edge="1" parent="1" source="schema" target="ai">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="corrections feed training" style="endArrow=block;html=1;rounded=0;strokeColor=#3B6FD8;strokeWidth=2;fontColor=#17225C;fontSize=12;dashed=1;" edge="1" parent="1" source="review" target="schema">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

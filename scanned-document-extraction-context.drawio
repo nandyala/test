@@ -1,0 +1,162 @@
+<mxfile host="app.diagrams.net" modified="2026-06-22T00:00:00.000Z" agent="Codex" version="26.0.0" type="device">
+  <diagram id="context-diagram" name="Context Architecture">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Scanned Document Extraction Service - Context Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;fontStyle=1;fontColor=#172B4D;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="1000" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="user" value="Business User / Client App&#xa;Uploads PDF, TIFF, images&#xa;Views extracted data and status" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF2FF;strokeColor=#2F5FB3;fontSize=15;fontStyle=1;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="230" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="downstream" value="Downstream Systems&#xa;Claims, Disputes, Insurance, Case Mgmt, CRM&#xa;Consumes canonical JSON" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF7EA;strokeColor=#2E7D32;fontSize=15;fontStyle=1;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="160" width="270" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="reviewer" value="Human Reviewer&#xa;Corrects low-confidence fields&#xa;Approves final extraction" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFF4E5;strokeColor=#C77700;fontSize=15;fontStyle=1;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="715" width="270" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="springBoundary" value="Spring Boot Document Extraction Platform" style="swimlane;html=1;rounded=0;whiteSpace=wrap;fillColor=#F7F8FA;strokeColor=#44546A;fontSize=18;fontStyle=1;startSize=38;" vertex="1" parent="1">
+          <mxGeometry x="340" y="115" width="840" height="690" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="api" value="Document API&#xa;Upload, status, result retrieval" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#5E6C84;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="40" y="80" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="orchestrator" value="Processing Orchestrator&#xa;Workflow, retry, async status&#xa;Page range coordination" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#5E6C84;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="315" y="80" width="220" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="router" value="Document Type Router&#xa;Maps classifier result to schema&#xa;Chooses extraction model/version" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#5E6C84;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="585" y="80" width="220" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="normalizer" value="Field Normalization&#xa;Dates, currency, IDs, names&#xa;Canonical JSON mapping" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#5E6C84;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="315" y="280" width="220" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="validation" value="Validation and Confidence Rules&#xa;Required fields&#xa;Business checks&#xa;Review threshold decisions" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#5E6C84;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="585" y="280" width="220" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="reviewQueue" value="Review Queue&#xa;Low confidence / missing fields&#xa;Correction capture" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFF8E8;strokeColor=#C77700;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="585" y="505" width="220" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="trainingManager" value="Training Data Manager&#xa;Historical samples&#xa;Reviewer corrections&#xa;Model version promotion" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#F3ECFF;strokeColor=#6B46C1;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="springBoundary">
+          <mxGeometry x="315" y="505" width="220" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="azureBoundary" value="Azure AI Services" style="swimlane;html=1;rounded=0;whiteSpace=wrap;fillColor=#EEF6FF;strokeColor=#0078D4;fontSize=18;fontStyle=1;startSize=38;" vertex="1" parent="1">
+          <mxGeometry x="60" y="455" width="250" height="350" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="classifier" value="Azure Document Intelligence&#xa;Custom Classifier&#xa;Classifies and splits documents" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#0078D4;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="azureBoundary">
+          <mxGeometry x="25" y="70" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="extractor" value="Azure Document Intelligence&#xa;Custom Extraction Models&#xa;Neural / template / composed" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#0078D4;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="azureBoundary">
+          <mxGeometry x="25" y="205" width="200" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="storageBoundary" value="Data and Configuration Stores" style="swimlane;html=1;rounded=0;whiteSpace=wrap;fillColor=#F6F9F4;strokeColor=#4B7F31;fontSize=18;fontStyle=1;startSize=38;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="350" width="280" height="310" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="blob" value="Azure Blob Storage&#xa;Original PDFs/TIFFs&#xa;Training samples" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#4B7F31;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="storageBoundary">
+          <mxGeometry x="30" y="65" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="db" value="Application Database&#xa;Document status&#xa;Extraction results&#xa;Audit trail" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#4B7F31;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="storageBoundary">
+          <mxGeometry x="30" y="175" width="220" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="registry" value="Model and Schema Registry&#xa;Doc type definitions&#xa;Field schema versions&#xa;Azure model IDs" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#F3ECFF;strokeColor=#6B46C1;fontSize=14;fontStyle=1;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="955" y="505" width="220" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend" value="Legend&#xa;Solid arrows: runtime document processing&#xa;Dashed arrows: training / model improvement feedback&#xa;Canonical JSON keeps downstream systems independent from document layout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FAFBFC;strokeColor=#B3BAC5;fontSize=13;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="850" width="1480" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_user_api" value="1. Upload document" style="endArrow=block;html=1;rounded=0;strokeColor=#172B4D;fontSize=12;" edge="1" parent="1" source="user" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_api_blob" value="2. Store original file" style="endArrow=block;html=1;rounded=0;strokeColor=#172B4D;fontSize=12;" edge="1" parent="1" source="api" target="blob">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1265" y="220"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_api_orch" value="3. Start async workflow" style="endArrow=block;html=1;rounded=0;strokeColor=#172B4D;fontSize=12;" edge="1" parent="springBoundary" source="api" target="orchestrator">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_orch_classifier" value="4. Classify / split" style="endArrow=block;html=1;rounded=0;strokeColor=#0078D4;fontSize=12;" edge="1" parent="1" source="orchestrator" target="classifier">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_classifier_router" value="5. Doc type + pages" style="endArrow=block;html=1;rounded=0;strokeColor=#0078D4;fontSize=12;" edge="1" parent="1" source="classifier" target="router">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_router_registry" value="Lookup schema + model version" style="endArrow=block;html=1;rounded=0;strokeColor=#6B46C1;fontSize=12;" edge="1" parent="1" source="router" target="registry">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_router_extractor" value="6. Analyze with selected model" style="endArrow=block;html=1;rounded=0;strokeColor=#0078D4;fontSize=12;" edge="1" parent="1" source="router" target="extractor">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_extractor_norm" value="7. Raw fields + confidence" style="endArrow=block;html=1;rounded=0;strokeColor=#0078D4;fontSize=12;" edge="1" parent="1" source="extractor" target="normalizer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_norm_validation" value="8. Canonical fields" style="endArrow=block;html=1;rounded=0;strokeColor=#172B4D;fontSize=12;" edge="1" parent="springBoundary" source="normalizer" target="validation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_validation_db" value="9. Save result + audit" style="endArrow=block;html=1;rounded=0;strokeColor=#2E7D32;fontSize=12;" edge="1" parent="1" source="validation" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_validation_review" value="Low confidence" style="endArrow=block;html=1;rounded=0;strokeColor=#C77700;fontSize=12;" edge="1" parent="springBoundary" source="validation" target="reviewQueue">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_review_reviewer" value="Review task" style="endArrow=block;html=1;rounded=0;strokeColor=#C77700;fontSize=12;" edge="1" parent="1" source="reviewQueue" target="reviewer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_reviewer_training" value="Corrections" style="endArrow=block;html=1;rounded=0;strokeColor=#6B46C1;fontSize=12;dashed=1;" edge="1" parent="1" source="reviewer" target="trainingManager">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_training_blob" value="Curated training set" style="endArrow=block;html=1;rounded=0;strokeColor=#6B46C1;fontSize=12;dashed=1;" edge="1" parent="1" source="trainingManager" target="blob">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_training_registry" value="Promote new model version" style="endArrow=block;html=1;rounded=0;strokeColor=#6B46C1;fontSize=12;dashed=1;" edge="1" parent="1" source="trainingManager" target="registry">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_db_downstream" value="10. Publish canonical JSON" style="endArrow=block;html=1;rounded=0;strokeColor=#2E7D32;fontSize=12;" edge="1" parent="1" source="db" target="downstream">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_api_status" value="Status / extracted fields" style="endArrow=block;html=1;rounded=0;strokeColor=#172B4D;fontSize=12;" edge="1" parent="1" source="api" target="user">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" modified="2026-06-23T00:00:00.000Z" agent="Codex" version="26.0.0" type="device">
+  <diagram id="exec-context" name="Executive Context Diagram">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="950" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="eyebrow" value="EXECUTIVE CONTEXT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#3D5AC8;" vertex="1" parent="1">
+          <mxGeometry x="90" y="55" width="400" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="title" value="Document Extraction Service Context" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontStyle=1;fontColor=#1E2761;" vertex="1" parent="1">
+          <mxGeometry x="90" y="95" width="1000" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="subtitle" value="Scanned PDFs and TIFFs are classified, extracted, validated, and published as canonical JSON for business workflows." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#5A6478;" vertex="1" parent="1">
+          <mxGeometry x="90" y="165" width="1280" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="channels" value="Business Channels&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Portal upload&lt;br&gt;Batch intake&lt;br&gt;Email scan&lt;br&gt;API submission&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=24;fontStyle=1;fontColor=#1E2761;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="90" y="380" width="210" height="145" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="downstream" value="Downstream Systems&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Disputes&lt;br&gt;Insurance&lt;br&gt;Claims&lt;br&gt;CRM / case mgmt&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=24;fontStyle=1;fontColor=#1E2761;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="380" width="210" height="145" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="platform" value="Spring Boot Document Extraction Platform" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F7F9FE;strokeColor=#B9CBEA;strokeWidth=2;fontSize=30;fontStyle=1;fontColor=#1E2761;verticalAlign=top;spacingTop=28;" vertex="1" parent="1">
+          <mxGeometry x="430" y="300" width="740" height="330" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ingest" value="Ingest&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Upload, job ID,&lt;br&gt;status tracking&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=24;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="410" width="190" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="orchestrate" value="Orchestrate&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Classify, route,&lt;br&gt;extract, validate&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=24;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="790" y="410" width="190" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="canonical" value="Canonical JSON&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Stable schema by document type&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=24;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="640" y="550" width="310" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="azure" value="Azure AI&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Document Intelligence&lt;br&gt;classifier + extractors&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#1E2761;strokeColor=#1E2761;strokeWidth=2;fontSize=26;fontStyle=1;fontColor=#FFFFFF;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="685" y="230" width="220" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="review" value="Human Review&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Low confidence&lt;br&gt;or missing fields&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=22;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="690" width="210" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="datastores" value="Data Stores&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Blob storage&lt;br&gt;Database&lt;br&gt;Audit trail&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=22;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="720" width="210" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="registry" value="Model + Schema Registry&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Doc types&lt;br&gt;Field schema&lt;br&gt;Thresholds + model IDs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#EAF1FD;strokeColor=#B9CBEA;strokeWidth=2;fontSize=22;fontStyle=1;fontColor=#1E2761;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="720" width="250" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="principle" value="Runtime principle: classify first, route to the right extraction model, normalize to one business schema, and send exceptions to review." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#5A6478;" vertex="1" parent="1">
+          <mxGeometry x="90" y="880" width="1380" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_channels_platform" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;" edge="1" parent="1" source="channels" target="ingest">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_ingest_orch" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;" edge="1" parent="1" source="ingest" target="orchestrate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_orch_canonical" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;" edge="1" parent="1" source="orchestrate" target="canonical">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_canonical_downstream" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;" edge="1" parent="1" source="canonical" target="downstream">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_azure_orch" value="classify + extract" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;fontSize=14;fontColor=#5A6478;" edge="1" parent="1" source="azure" target="orchestrate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_canonical_review" value="exceptions" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;fontSize=14;fontColor=#5A6478;" edge="1" parent="1" source="canonical" target="review">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_platform_data" value="raw + audit" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;fontSize=14;fontColor=#5A6478;" edge="1" parent="1" source="platform" target="datastores">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_registry_platform" value="schemas + thresholds" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;fontSize=14;fontColor=#5A6478;" edge="1" parent="1" source="registry" target="platform">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_review_registry" value="corrections improve models" style="endArrow=block;html=1;rounded=0;strokeColor=#3D5AC8;strokeWidth=3;dashed=1;fontSize=14;fontColor=#5A6478;" edge="1" parent="1" source="review" target="registry">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

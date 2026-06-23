@@ -1,0 +1,140 @@
+{"kind":"deck","id":"pr/zeu07o","name":"Deck"}
+{"kind":"layout","layoutId":"84dcbeb9-9263-4a47-bca3-65a81dab2611","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"98ac48ff-fce3-41f4-94f7-6204f52e4ef6","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/tuky6q","slide":1,"title":"EXECUTIVE CONTEXT","textShapes":23}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":1,"text":"EXECUTIVE CONTEXT","textPreview":"EXECUTIVE CONTEXT","textChars":17,"textLines":1,"bbox":[52.8,26,860,22]}
+{"kind":"textbox","id":"sh/vixczed8","slide":1,"text":"Document Extraction Service Context","textPreview":"Document Extraction Service Context","textChars":35,"textLines":1,"bbox":[52.8,49,860,45]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":1,"text":"Business-facing view of how scanned documents become validated, canonical data for downstream workflows.","textPreview":"Business-facing view of how scanned documents become validated, canonical data for downstream workflows.","textChars":104,"textLines":1,"bbox":[52.8,100,850,26]}
+{"kind":"shape","id":"sh/dcbulwva","slide":1,"bbox":[190,250,120,0]}
+{"kind":"shape","id":"sh/kre1w7mp","slide":1,"bbox":[650,250,120,0]}
+{"kind":"shape","id":"sh/val87ed8","slide":1,"bbox":[480,350,0,42]}
+{"kind":"shape","id":"sh/6psfil0r","slide":1,"bbox":[350,350,0,60]}
+{"kind":"shape","id":"sh/d8bat47y","slide":1,"bbox":[610,350,0,60]}
+{"kind":"shape","id":"sh/knih4byh","slide":1,"bbox":[52,196,138,108]}
+{"kind":"textbox","id":"sh/uxc3ylc7","slide":1,"text":"Business Channels","textPreview":"Business Channels","textChars":17,"textLines":1,"bbox":[60,205,122,28]}
+{"kind":"textbox","id":"sh/ji5snelo","slide":1,"text":"Portal, batch intake,\nemail scan, API upload","textPreview":"Portal, batch intake, | email scan, API upload","textChars":44,"textLines":2,"bbox":[64,238,114,58]}
+{"kind":"shape","id":"sh/c3ylc7u5","slide":1,"bbox":[770,196,138,108]}
+{"kind":"textbox","id":"sh/1kre1w7m","slide":1,"text":"Downstream Systems","textPreview":"Downstream Systems","textChars":18,"textLines":1,"bbox":[778,205,122,28]}
+{"kind":"textbox","id":"sh/ulwval87","slide":1,"text":"Disputes, insurance,\nclaims, CRM, case mgmt","textPreview":"Disputes, insurance, | claims, CRM, case mgmt","textChars":43,"textLines":2,"bbox":[782,238,114,58]}
+{"kind":"shape","id":"sh/j6tovaho","slide":1,"bbox":[310,170,340,180]}
+{"kind":"textbox","id":"sh/crmhk3q5","slide":1,"text":"Spring Boot Extraction Platform","textPreview":"Spring Boot Extraction Platform","textChars":31,"textLines":1,"bbox":[330,186,300,28]}
+{"kind":"shape","id":"sh/1cfa9w3m","slide":1,"bbox":[338,232,124,70]}
+{"kind":"textbox","id":"sh/qh0fepkz","slide":1,"text":"Ingest","textPreview":"Ingest","textChars":6,"textLines":1,"bbox":[346,241,108,28]}
+{"kind":"textbox","id":"sh/j2t83itg","slide":1,"text":"Upload, job ID,\nstatus","textPreview":"Upload, job ID, | status","textChars":22,"textLines":2,"bbox":[350,274,100,20]}
+{"kind":"shape","id":"sh/bq1oryts","slide":1,"bbox":[498,232,124,70]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":1,"text":"Orchestrate","textPreview":"Orchestrate","textChars":11,"textLines":1,"bbox":[506,241,108,28]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":1,"text":"Route, extract,\nvalidate","textPreview":"Route, extract, | validate","textChars":24,"textLines":2,"bbox":[510,274,100,20]}
+{"kind":"shape","id":"sh/4byhgn29","slide":1,"bbox":[462,267,36,0]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":1,"bbox":[382,315,196,48]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":1,"text":"Canonical JSON","textPreview":"Canonical JSON","textChars":14,"textLines":1,"bbox":[390,324,180,28]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":1,"text":"Stable schema by document type","textPreview":"Stable schema by document type","textChars":30,"textLines":1,"bbox":[394,344,172,11]}
+{"kind":"shape","id":"sh/4nap4r65","slide":1,"bbox":[262,405,176,76]}
+{"kind":"textbox","id":"sh/bat47y1k","slide":1,"text":"Data Stores","textPreview":"Data Stores","textChars":11,"textLines":1,"bbox":[270,414,160,28]}
+{"kind":"textbox","id":"sh/mp0bi9s3","slide":1,"text":"Blob, database,\naudit trail","textPreview":"Blob, database, | audit trail","textChars":27,"textLines":2,"bbox":[274,447,152,26]}
+{"kind":"shape","id":"sh/szqtcj6t","slide":1,"bbox":[522,405,176,76]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":1,"text":"Model + Schema Registry","textPreview":"Model + Schema Registry","textChars":23,"textLines":1,"bbox":[530,414,160,28]}
+{"kind":"textbox","id":"sh/at47y1kr","slide":1,"text":"Doc types, fields,\nthresholds, model IDs","textPreview":"Doc types, fields, | thresholds, model IDs","textChars":40,"textLines":2,"bbox":[534,447,152,26]}
+{"kind":"shape","id":"sh/3ex0nuxc","slide":1,"bbox":[410,383,140,52]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":1,"text":"Human Review","textPreview":"Human Review","textChars":12,"textLines":1,"bbox":[418,392,124,28]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":1,"text":"Low confidence cases","textPreview":"Low confidence cases","textChars":20,"textLines":1,"bbox":[422,414,116,13]}
+{"kind":"shape","id":"sh/ahoza1gv","slide":1,"bbox":[395,130,170,58]}
+{"kind":"textbox","id":"sh/32lszqtc","slide":1,"text":"Azure AI","textPreview":"Azure AI","textChars":8,"textLines":1,"bbox":[403,139,154,28]}
+{"kind":"textbox","id":"sh/wb2hwfyx","slide":1,"text":"Document Intelligence\nclassifier + extractors","textPreview":"Document Intelligence | classifier + extractors","textChars":45,"textLines":2,"bbox":[407,161,146,19]}
+{"kind":"shape","id":"sh/lwval87e","slide":1,"bbox":[480,188,0,44]}
+{"kind":"shape","id":"sh/dsji5sne","slide":1,"bbox":[480,302,0,13]}
+{"kind":"textbox","id":"sh/o7qpg3ex","slide":1,"text":"Runtime principle: classify first, route to the right extraction model, normalize into one business schema, and send exceptions to review.","textPreview":"Runtime principle: classify first, route to the right extraction model, normalize into one business schema, and send exceptions to review.","textChars":138,"textLines":1,"bbox":[52.8,500,854,24]}
+{"kind":"notes","id":"nt/tuky6q","slide":1,"text":""}
+{"kind":"slide","id":"sl/d844k1","slide":2,"title":"ARCHITECTURE FLOW","textShapes":24}
+{"kind":"textbox","id":"sh/2p8nqxs7","slide":2,"text":"ARCHITECTURE FLOW","textPreview":"ARCHITECTURE FLOW","textChars":17,"textLines":1,"bbox":[52.8,26,860,22]}
+{"kind":"textbox","id":"sh/9gr2p8nq","slide":2,"text":"Classify First, Then Extract","textPreview":"Classify First, Then Extract","textChars":28,"textLines":1,"bbox":[52.8,49,860,45]}
+{"kind":"textbox","id":"sh/gvy90je9","slide":2,"text":"The POC proves the critical path without locking the implementation to one document layout.","textPreview":"The POC proves the critical path without locking the implementation to one document layout.","textChars":91,"textLines":1,"bbox":[52.8,100,850,26]}
+{"kind":"shape","id":"sh/r2p8nqxs","slide":2,"bbox":[52.8,190,126,150]}
+{"kind":"textbox","id":"sh/2hwfyxob","slide":2,"text":"Ingest","textPreview":"Ingest","textChars":6,"textLines":1,"bbox":[60.8,199,110,28]}
+{"kind":"textbox","id":"sh/94fu18jq","slide":2,"text":"PDF/TIFF upload,\nstore raw file,\nreturn job ID","textPreview":"PDF/TIFF upload, | store raw file, | return job ID","textChars":46,"textLines":3,"bbox":[64.8,240,102,92]}
+{"kind":"shape","id":"sh/kjm1cfa9","slide":2,"bbox":[65.8,207,24,24]}
+{"kind":"textbox","id":"sh/rqd4vmtw","slide":2,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[65.8,211,24,16]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":2,"bbox":[178.8,265,20,0]}
+{"kind":"shape","id":"sh/4fu18jqh","slide":2,"bbox":[200.8,190,126,150]}
+{"kind":"textbox","id":"sh/x0nuxc3y","slide":2,"text":"Queue","textPreview":"Queue","textChars":5,"textLines":1,"bbox":[208.8,199,110,28]}
+{"kind":"textbox","id":"sh/m94fu18j","slide":2,"text":"Async message,\nretry handling,\nDLQ path","textPreview":"Async message, | retry handling, | DLQ path","textChars":39,"textLines":3,"bbox":[212.8,240,102,92]}
+{"kind":"shape","id":"sh/fu18jqh0","slide":2,"bbox":[213.8,207,24,24]}
+{"kind":"textbox","id":"sh/83itgfml","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[213.8,211,24,16]}
+{"kind":"shape","id":"sh/xobm58z2","slide":2,"bbox":[326.8,265,20,0]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":2,"bbox":[348.8,190,126,150]}
+{"kind":"textbox","id":"sh/fil0rqd4","slide":2,"text":"Classify","textPreview":"Classify","textChars":8,"textLines":1,"bbox":[356.8,199,110,28]}
+{"kind":"textbox","id":"sh/4zidonyd","slide":2,"text":"Doc type and\npage range with\nconfidence","textPreview":"Doc type and | page range with | confidence","textChars":39,"textLines":3,"bbox":[360.8,240,102,92]}
+{"kind":"shape","id":"sh/xkf6dcbu","slide":2,"bbox":[361.8,207,24,24]}
+{"kind":"textbox","id":"sh/xczed8v6","slide":2,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[361.8,211,24,16]}
+{"kind":"shape","id":"sh/8v6psfil","slide":2,"bbox":[474.8,265,20,0]}
+{"kind":"shape","id":"sh/fa9w3m94","slide":2,"bbox":[496.8,190,126,150]}
+{"kind":"textbox","id":"sh/qpg3ex0n","slide":2,"text":"Extract","textPreview":"Extract","textChars":7,"textLines":1,"bbox":[504.8,199,110,28]}
+{"kind":"textbox","id":"sh/x4nap4r6","slide":2,"text":"Neural model per\ndoc type returns\nfield confidence","textPreview":"Neural model per | doc type returns | field confidence","textChars":50,"textLines":3,"bbox":[508.8,240,102,92]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":2,"bbox":[509.8,207,24,24]}
+{"kind":"textbox","id":"sh/fyxobm58","slide":2,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[509.8,211,24,16]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":2,"bbox":[622.8,265,20,0]}
+{"kind":"shape","id":"sh/xs72x4na","slide":2,"bbox":[644.8,190,126,150]}
+{"kind":"textbox","id":"sh/87ed8bat","slide":2,"text":"Validate","textPreview":"Validate","textChars":8,"textLines":1,"bbox":[652.8,199,110,28]}
+{"kind":"textbox","id":"sh/2p8nqxs7","slide":2,"text":"Required fields,\nthresholds,\nbusiness rules","textPreview":"Required fields, | thresholds, | business rules","textChars":43,"textLines":3,"bbox":[656.8,240,102,92]}
+{"kind":"shape","id":"sh/ra5gbq1o","slide":2,"bbox":[657.8,207,24,24]}
+{"kind":"textbox","id":"sh/gvy90je9","slide":2,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[657.8,211,24,16]}
+{"kind":"shape","id":"sh/9gr2p8nq","slide":2,"bbox":[770.8,265,20,0]}
+{"kind":"shape","id":"sh/2hwfyxob","slide":2,"bbox":[792.8,190,126,150]}
+{"kind":"textbox","id":"sh/r2p8nqxs","slide":2,"text":"Publish","textPreview":"Publish","textChars":7,"textLines":1,"bbox":[800.8,199,110,28]}
+{"kind":"textbox","id":"sh/kjm1cfa9","slide":2,"text":"Canonical JSON,\nstatus API,\naudit record","textPreview":"Canonical JSON, | status API, | audit record","textChars":40,"textLines":3,"bbox":[804.8,240,102,92]}
+{"kind":"shape","id":"sh/94fu18jq","slide":2,"bbox":[805.8,207,24,24]}
+{"kind":"textbox","id":"sh/25kb6xkf","slide":2,"text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[805.8,211,24,16]}
+{"kind":"shape","id":"sh/rqd4vmtw","slide":2,"bbox":[158,384,644,58]}
+{"kind":"textbox","id":"sh/bulwval8","slide":2,"text":"Design choice","textPreview":"Design choice","textChars":13,"textLines":1,"bbox":[178,397,120,20]}
+{"kind":"textbox","id":"sh/i9s36hcr","slide":2,"text":"Layout variance is handled inside each custom neural model. Spring Boot owns routing, validation, audit, and business rules.","textPreview":"Layout variance is handled inside each custom neural model. Spring Boot owns routing, validation, audit, and business rules.","textChars":124,"textLines":1,"bbox":[296,397,480,28]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":2,"text":"State model: RECEIVED -> CLASSIFIED -> EXTRACTED -> VALIDATED -> COMPLETED or REVIEW.","textPreview":"State model: RECEIVED -> CLASSIFIED -> EXTRACTED -> VALIDATED -> COMPLETED or REVIEW.","textChars":85,"textLines":1,"bbox":[52.8,500,854,24]}
+{"kind":"notes","id":"nt/d844k1","slide":2,"text":""}
+{"kind":"slide","id":"sl/c8zhgy","slide":3,"title":"TECH STACK","textShapes":27}
+{"kind":"textbox","id":"sh/t83itgfm","slide":3,"text":"TECH STACK","textPreview":"TECH STACK","textChars":10,"textLines":1,"bbox":[52.8,26,860,22]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":3,"text":"POC Components and Executive Controls","textPreview":"POC Components and Executive Controls","textChars":37,"textLines":1,"bbox":[52.8,49,860,45]}
+{"kind":"textbox","id":"sh/b2hwfyxo","slide":3,"text":"The stack separates AI extraction from enterprise controls such as audit, review, security, and model governance.","textPreview":"The stack separates AI extraction from enterprise controls such as audit, review, security, and model governance.","textChars":113,"textLines":1,"bbox":[52.8,100,850,26]}
+{"kind":"shape","id":"sh/4byhgn29","slide":3,"bbox":[52.8,135,196,32]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":3,"text":"Layer","textPreview":"Layer","textChars":5,"textLines":1,"bbox":[60.8,143,180,16]}
+{"kind":"shape","id":"sh/m58z25kb","slide":3,"bbox":[250,135,196,32]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":3,"text":"Technology","textPreview":"Technology","textChars":10,"textLines":1,"bbox":[258,143,180,16]}
+{"kind":"shape","id":"sh/47y1kre1","slide":3,"bbox":[448,135,196,32]}
+{"kind":"textbox","id":"sh/tsvu9kni","slide":3,"text":"Role","textPreview":"Role","textChars":4,"textLines":1,"bbox":[456,143,180,16]}
+{"kind":"shape","id":"sh/90je9cvi","slide":3,"bbox":[646,135,196,32]}
+{"kind":"textbox","id":"sh/gfmlkjm1","slide":3,"text":"Executive Control","textPreview":"Executive Control","textChars":17,"textLines":1,"bbox":[654,143,180,16]}
+{"kind":"shape","id":"sh/rytsvu9k","slide":3,"bbox":[52.8,160,196,70]}
+{"kind":"textbox","id":"sh/yd0z6103","slide":3,"text":"Channel + API","textPreview":"Channel + API","textChars":13,"textLines":1,"bbox":[60.8,170,180,48]}
+{"kind":"shape","id":"sh/9s36hcrm","slide":3,"bbox":[250,160,196,70]}
+{"kind":"textbox","id":"sh/g7adsji5","slide":3,"text":"Spring Boot 3","textPreview":"Spring Boot 3","textChars":13,"textLines":1,"bbox":[258,170,180,48]}
+{"kind":"shape","id":"sh/rmhk3q5o","slide":3,"bbox":[448,160,196,70]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":3,"text":"Upload, status,\njob lifecycle","textPreview":"Upload, status, | job lifecycle","textChars":29,"textLines":2,"bbox":[456,170,180,48]}
+{"kind":"shape","id":"sh/5o7qpg3e","slide":3,"bbox":[646,160,196,70]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":3,"text":"Idempotency,\naccess control","textPreview":"Idempotency, | access control","textChars":27,"textLines":2,"bbox":[654,170,180,48]}
+{"kind":"shape","id":"sh/cfa9w3m9","slide":3,"bbox":[52.8,238,196,70]}
+{"kind":"textbox","id":"sh/1032lszq","slide":3,"text":"Async Processing","textPreview":"Async Processing","textChars":16,"textLines":1,"bbox":[60.8,248,180,48]}
+{"kind":"shape","id":"sh/u9knih4b","slide":3,"bbox":[250,238,196,70]}
+{"kind":"textbox","id":"sh/judg7ads","slide":3,"text":"Azure Service Bus\n+ Spring worker","textPreview":"Azure Service Bus | + Spring worker","textChars":33,"textLines":2,"bbox":[258,248,180,48]}
+{"kind":"shape","id":"sh/c7u54zid","slide":3,"bbox":[448,238,196,70]}
+{"kind":"textbox","id":"sh/1orytsvu","slide":3,"text":"Queue, retry,\nstate machine","textPreview":"Queue, retry, | state machine","textChars":27,"textLines":2,"bbox":[456,248,180,48]}
+{"kind":"shape","id":"sh/u18jqh0f","slide":3,"bbox":[646,238,196,70]}
+{"kind":"textbox","id":"sh/jm1cfa9w","slide":3,"text":"DLQ, runbooks,\nobservability","textPreview":"DLQ, runbooks, | observability","textChars":28,"textLines":2,"bbox":[654,248,180,48]}
+{"kind":"shape","id":"sh/cvixczed","slide":3,"bbox":[52.8,316,196,70]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":3,"text":"AI Extraction","textPreview":"AI Extraction","textChars":13,"textLines":1,"bbox":[60.8,326,180,48]}
+{"kind":"shape","id":"sh/val87ed8","slide":3,"bbox":[250,316,196,70]}
+{"kind":"textbox","id":"sh/6psfil0r","slide":3,"text":"Azure Document\nIntelligence","textPreview":"Azure Document | Intelligence","textChars":27,"textLines":2,"bbox":[258,326,180,48]}
+{"kind":"shape","id":"sh/dcbulwva","slide":3,"bbox":[448,316,196,70]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":3,"text":"Classifier + custom\nneural extractors","textPreview":"Classifier + custom | neural extractors","textChars":37,"textLines":2,"bbox":[456,326,180,48]}
+{"kind":"shape","id":"sh/vixczed8","slide":3,"bbox":[646,316,196,70]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":3,"text":"Model versioning,\nfield metrics","textPreview":"Model versioning, | field metrics","textChars":31,"textLines":2,"bbox":[654,326,180,48]}
+{"kind":"shape","id":"sh/donyd0z6","slide":3,"bbox":[52.8,394,196,70]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":3,"text":"Persistence + Review","textPreview":"Persistence + Review","textChars":20,"textLines":1,"bbox":[60.8,404,180,48]}
+{"kind":"shape","id":"sh/vu9knih4","slide":3,"bbox":[250,394,196,70]}
+{"kind":"textbox","id":"sh/29gr2p8n","slide":3,"text":"Blob Storage,\nAzure SQL/Postgres","textPreview":"Blob Storage, | Azure SQL/Postgres","textChars":32,"textLines":2,"bbox":[258,404,180,48]}
+{"kind":"shape","id":"sh/i5sneloj","slide":3,"bbox":[448,394,196,70]}
+{"kind":"textbox","id":"sh/7qpg3ex0","slide":3,"text":"Raw docs, JSON,\naudit, exceptions","textPreview":"Raw docs, JSON, | audit, exceptions","textChars":33,"textLines":2,"bbox":[456,404,180,48]}
+{"kind":"shape","id":"sh/0bi9s36h","slide":3,"bbox":[646,394,196,70]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":3,"text":"Retention, audit,\nreview thresholds","textPreview":"Retention, audit, | review thresholds","textChars":35,"textLines":2,"bbox":[654,404,180,48]}
+{"kind":"shape","id":"sh/ed8v6psf","slide":3,"bbox":[52.8,480,854,38]}
+{"kind":"textbox","id":"sh/7y1kre1w","slide":3,"text":"Success targets","textPreview":"Success targets","textChars":15,"textLines":1,"bbox":[75,491,120,16]}
+{"kind":"textbox","id":"sh/wjudg7ad","slide":3,"text":"95%+ classification accuracy","textPreview":"95%+ classification accuracy","textChars":28,"textLines":1,"bbox":[220,491,190,16]}
+{"kind":"textbox","id":"sh/p4r65wju","slide":3,"text":"85%+ key-field extraction","textPreview":"85%+ key-field extraction","textChars":25,"textLines":1,"bbox":[445,491,190,16]}
+{"kind":"textbox","id":"sh/ih4byhgn","slide":3,"text":"60%+ estimated STP rate","textPreview":"60%+ estimated STP rate","textChars":23,"textLines":1,"bbox":[670,491,190,16]}
+{"kind":"notes","id":"nt/c8zhgy","slide":3,"text":""}
