@@ -1,0 +1,784 @@
+Absolutely — below is the complete Confluence Wiki Markup for the full page, so you can copy the entire block and paste it into Confluence source/wiki markup mode.
+
+h1. F5 DCP PROD/DR Failover Reference
+
+h2. Purpose
+
+This document records the F5 configuration used for the DCP application, including the previous configuration, the updated configuration, and the expected PROD/DR failover behavior.
+
+The application uses an F5 Virtual Server with URI-based routing to three DCP application pools:
+
+* /dcp01 → DCP01 Pool
+* /dcp02 → DCP02 Pool
+* /dcp03 → DCP03 Pool
+
+The same logical configuration exists in both the PROD and DR environments.
+
+The purpose of this document is to provide a future reference for:
+
+* The original F5 configuration.
+* The reason the Default Pool configuration was changed.
+* The current F5 configuration.
+* How DCP01, DCP02 and DCP03 health affects PROD/DR failover.
+* Operational considerations associated with using DCP01 as the Default Pool.
+
+⸻
+
+h1. 1. Previous Configuration
+
+Previously, the F5 Virtual Server did not have a Default Pool configured.
+
+URI-based F5 policies or rules were responsible for routing requests to the appropriate DCP pool.
+
+{code}
+Application VIP
+|
+F5 Virtual Server
+Default Pool: None
+|
++———––+———––+
+|             |             |
+/dcp01        /dcp02        /dcp03
+|             |             |
+DCP01 Pool     DCP02 Pool     DCP03 Pool
+{code}
+
+h3. Previous Configuration Summary
+
+|| URI / Setting || Target Pool / Value ||
+| /dcp01 | DCP01 Pool |
+| /dcp02 | DCP02 Pool |
+| /dcp03 | DCP03 Pool |
+| Default Pool | None |
+| URI Routing | Enabled |
+
+h3. Previous Request Routing
+
+The routing behavior was:
+
+{code}
+/dcp01  –>  DCP01 Pool
+/dcp02  –>  DCP02 Pool
+/dcp03  –>  DCP03 Pool
+{code}
+
+There was no generic backend pool configured directly against the F5 Virtual Server.
+
+⸻
+
+h1. 2. Observed Behavior with No Default Pool
+
+During PROD/DR active-active operation, automatic failover was not working as expected.
+
+Although DCP01, DCP02 and DCP03 had their own backend pool health monitoring, the Virtual Server itself did not have a Default Pool associated with it.
+
+The configuration therefore looked logically like:
+
+{code}
+Application VIP
+|
+Virtual Server
+|
+Default Pool = None
+|
+URI Routing
+|
++———+———+———+
+|         |         |
+DCP01     DCP02     DCP03
+Pool      Pool      Pool
+{code}
+
+When backend application servers became unavailable, the required Virtual Server availability state was not being reflected correctly for the existing PROD/DR automatic failover mechanism.
+
+This resulted in a situation where the individual backend pools could be unhealthy, while the overall PROD/DR failover behavior did not occur as expected.
+
+⸻
+
+h1. 3. Configuration Change
+
+To address the failover behavior, the F5 configuration was updated so that DCP01 Pool is configured as the Default Pool for the Virtual Server.
+
+The existing URI-based routing remains unchanged.
+
+{code}
+Application VIP
+|
+F5 Virtual Server
+Default Pool: DCP01
+|
++———––+———––+
+|             |             |
+/dcp01        /dcp02        /dcp03
+|             |             |
+DCP01 Pool     DCP02 Pool     DCP03 Pool
+{code}
+
+h3. Current Configuration Summary
+
+|| URI / Setting || Target Pool / Value ||
+| /dcp01 | DCP01 Pool |
+| /dcp02 | DCP02 Pool |
+| /dcp03 | DCP03 Pool |
+| Default Pool | DCP01 Pool |
+| URI Routing | Enabled |
+
+The request routing remains:
+
+{code}
+/dcp01  –>  DCP01 Pool
+/dcp02  –>  DCP02 Pool
+/dcp03  –>  DCP03 Pool
+{code}
+
+DCP01 now additionally serves as the Default Pool for the F5 Virtual Server.
+
+⸻
+
+h1. 4. Before vs. After
+
+|| Configuration || Before || After ||
+| /dcp01 routing | DCP01 Pool | DCP01 Pool |
+| /dcp02 routing | DCP02 Pool | DCP02 Pool |
+| /dcp03 routing | DCP03 Pool | DCP03 Pool |
+| Default Pool | None | DCP01 Pool |
+| URI routing logic | Enabled | Enabled |
+| DCP01 URI behavior | DCP01 Pool | DCP01 Pool |
+| DCP02 URI behavior | DCP02 Pool | DCP02 Pool |
+| DCP03 URI behavior | DCP03 Pool | DCP03 Pool |
+| PROD/DR automatic failover | Not working as expected | Working with current configuration |
+
+⸻
+
+h1. 5. Reason for the Change
+
+The change was introduced because the previous configuration did not have a Default Pool associated with the F5 Virtual Server.
+
+In the previous setup:
+
+{code}
+Default Pool = None
+{code}
+
+the existing automatic PROD/DR failover mechanism was not receiving the required Virtual Server availability state.
+
+DCP01 was selected as the Default Pool so that the Virtual Server has a defined backend pool whose health participates in the current availability and failover behavior.
+
+No changes were made to the existing URI routing for DCP01, DCP02 or DCP03.
+
+The current configuration is therefore:
+
+{code}
+Default Pool = DCP01
+
+URI Routing:
+/dcp01 –> DCP01
+/dcp02 –> DCP02
+/dcp03 –> DCP03
+{code}
+
+⸻
+
+h1. 6. Failover Behavior with DCP01 as Default Pool
+
+With DCP01 configured as the Default Pool, DCP01 health becomes important to the overall F5 Virtual Server availability.
+
+The current routing model is:
+
+{code}
+/dcp01 –> DCP01 Pool
+/dcp02 –> DCP02 Pool
+/dcp03 –> DCP03 Pool
+
+Default Pool –> DCP01 Pool
+{code}
+
+The following sections document the expected behavior for different backend failure scenarios.
+
+⸻
+
+h2. Scenario 1 - All DCP Pools Are Healthy
+
+h3. Pool Status
+
+{code}
+DCP01 = UP
+DCP02 = UP
+DCP03 = UP
+{code}
+
+h3. Expected Behavior
+
+* DCP01 Default Pool remains healthy.
+* PROD VIP remains available.
+* /dcp01 traffic is routed to DCP01.
+* /dcp02 traffic is routed to DCP02.
+* /dcp03 traffic is routed to DCP03.
+* No PROD to DR failover occurs.
+
+h3. Flow
+
+{code}
+DCP01 = UP
+DCP02 = UP
+DCP03 = UP
+|
+v
+Default Pool DCP01 = UP
+|
+v
+PROD VIP = AVAILABLE
+|
+v
+No Failover
+{code}
+
+⸻
+
+h2. Scenario 2 - DCP01 Servers Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = DOWN
+DCP02 = UP
+DCP03 = UP
+{code}
+
+Because DCP01 is configured as the Default Pool, its health participates in determining the availability of the F5 Virtual Server.
+
+h3. Expected Behavior
+
+* All healthy members behind the DCP01 pool are unavailable.
+* DCP01 Default Pool becomes unavailable.
+* The PROD Virtual Server becomes unavailable for the existing failover decision.
+* PROD to DR automatic failover is triggered.
+* Traffic is moved to the DR environment according to the existing F5 PROD/DR configuration.
+
+h3. Flow
+
+{code}
+DCP01 Servers DOWN
+|
+v
+DCP01 Pool DOWN
+|
+v
+Default Pool DOWN
+|
+v
+PROD VIP becomes unavailable
+|
+v
+PROD –> DR Failover
+{code}
+
+h3. Important Behavior
+
+Even if DCP02 and DCP03 in PROD are still healthy:
+
+{code}
+DCP01 = DOWN
+DCP02 = UP
+DCP03 = UP
+{code}
+
+the overall PROD VIP can fail over because DCP01 is the Default Pool.
+
+This means DCP01 health is currently significant to the overall site-level failover behavior.
+
+⸻
+
+h2. Scenario 3 - DCP02 Servers Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = UP
+DCP02 = DOWN
+DCP03 = UP
+{code}
+
+h3. Expected Behavior
+
+* DCP01 Default Pool remains healthy.
+* PROD VIP remains available.
+* PROD to DR site-level failover is not triggered solely because DCP02 is down.
+* /dcp01 continues to operate normally.
+* /dcp03 continues to operate normally.
+* Requests to /dcp02 are impacted because the DCP02 pool has no healthy backend servers.
+
+h3. Flow
+
+{code}
+DCP02 Servers DOWN
+|
+v
+DCP02 Pool DOWN
+|
+v
+DCP01 Default Pool still UP
+|
+v
+PROD VIP remains AVAILABLE
+|
+v
+No site-level failover
+{code}
+
+h3. Result
+
+The failure is primarily limited to requests targeting:
+
+{code}
+/dcp02
+{code}
+
+while DCP01 and DCP03 can continue serving traffic.
+
+⸻
+
+h2. Scenario 4 - DCP03 Servers Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = UP
+DCP02 = UP
+DCP03 = DOWN
+{code}
+
+h3. Expected Behavior
+
+* DCP01 Default Pool remains healthy.
+* PROD VIP remains available.
+* PROD to DR site-level failover is not triggered solely because DCP03 is down.
+* /dcp01 continues to operate.
+* /dcp02 continues to operate.
+* Requests to /dcp03 are impacted because the DCP03 pool has no healthy backend servers.
+
+h3. Flow
+
+{code}
+DCP03 Servers DOWN
+|
+v
+DCP03 Pool DOWN
+|
+v
+DCP01 Default Pool still UP
+|
+v
+PROD VIP remains AVAILABLE
+|
+v
+No site-level failover
+{code}
+
+h3. Result
+
+The failure is primarily limited to requests targeting:
+
+{code}
+/dcp03
+{code}
+
+while DCP01 and DCP02 continue serving traffic.
+
+⸻
+
+h2. Scenario 5 - DCP02 and DCP03 Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = UP
+DCP02 = DOWN
+DCP03 = DOWN
+{code}
+
+h3. Expected Behavior
+
+* DCP01 remains healthy.
+* DCP01 Default Pool remains available.
+* PROD VIP remains available.
+* PROD to DR site-level failover is not triggered based only on DCP02 and DCP03 failures.
+* /dcp01 continues to operate.
+* /dcp02 requests are impacted.
+* /dcp03 requests are impacted.
+
+h3. Flow
+
+{code}
+DCP02 DOWN
+DCP03 DOWN
+|
+v
+DCP01 Default Pool still UP
+|
+v
+PROD VIP remains AVAILABLE
+|
+v
+No overall PROD –> DR failover
+{code}
+
+This is an important behavior of the current configuration.
+
+Even though two application pools may be unavailable, the overall VIP can remain available as long as the DCP01 Default Pool remains healthy.
+
+⸻
+
+h2. Scenario 6 - DCP01 and DCP02 Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = DOWN
+DCP02 = DOWN
+DCP03 = UP
+{code}
+
+h3. Expected Behavior
+
+Because DCP01 is the Default Pool:
+
+{code}
+DCP01 DOWN
+|
+v
+Default Pool DOWN
+|
+v
+PROD VIP unavailable
+|
+v
+PROD –> DR Failover
+{code}
+
+The availability of DCP03 does not prevent the overall failover if the current failover decision is based on DCP01 Default Pool health.
+
+⸻
+
+h2. Scenario 7 - DCP01 and DCP03 Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = DOWN
+DCP02 = UP
+DCP03 = DOWN
+{code}
+
+h3. Expected Behavior
+
+Because DCP01 is the Default Pool:
+
+{code}
+DCP01 DOWN
+|
+v
+Default Pool DOWN
+|
+v
+PROD VIP unavailable
+|
+v
+PROD –> DR Failover
+{code}
+
+DCP02 being healthy does not prevent the overall failover when DCP01 is unavailable.
+
+⸻
+
+h2. Scenario 8 - All DCP Pools Are Down
+
+h3. Pool Status
+
+{code}
+DCP01 = DOWN
+DCP02 = DOWN
+DCP03 = DOWN
+{code}
+
+h3. Expected Behavior
+
+* DCP01 Default Pool is unavailable.
+* PROD VIP becomes unavailable.
+* Automatic PROD to DR failover occurs, assuming the corresponding DR environment is healthy.
+
+h3. Flow
+
+{code}
+DCP01 DOWN
+DCP02 DOWN
+DCP03 DOWN
+|
+v
+DCP01 Default Pool DOWN
+|
+v
+PROD VIP DOWN
+|
+v
+PROD –> DR Failover
+{code}
+
+⸻
+
+h1. 7. Failover Summary
+
+|| DCP01 || DCP02 || DCP03 || VIP / Site Status || Expected PROD to DR Failover ||
+| UP | UP | UP | UP | No |
+| DOWN | UP | UP | Unavailable | Yes |
+| UP | DOWN | UP | UP | No |
+| UP | UP | DOWN | UP | No |
+| UP | DOWN | DOWN | UP | No |
+| DOWN | DOWN | UP | Unavailable | Yes |
+| DOWN | UP | DOWN | Unavailable | Yes |
+| DOWN | DOWN | DOWN | Unavailable | Yes |
+
+⸻
+
+h1. 8. Key Failover Principle
+
+Under the current configuration:
+
+{code}
+DCP01 failure
+|
+v
+Default Pool failure
+|
+v
+PROD VIP unavailable
+|
+v
+PROD –> DR failover
+{code}
+
+Whereas:
+
+{code}
+DCP02 or DCP03 failure
+|
+v
+DCP01 remains healthy
+|
+v
+Default Pool remains healthy
+|
+v
+PROD VIP remains available
+|
+v
+No overall PROD –> DR failover
+{code}
+
+Therefore, the current configuration effectively provides:
+
+Site-level failover primarily based on DCP01 Default Pool health.
+
+It does not provide independent PROD/DR failover based on the health of every individual DCP URI pool.
+
+⸻
+
+h1. 9. Operational Considerations
+
+With the current configuration, DCP01 is significant to the overall VIP health and failover behavior because it is configured as the Default Pool.
+
+Any future change to the following DCP01 components should consider the possible impact on PROD/DR failover:
+
+* DCP01 backend servers.
+* DCP01 pool members.
+* DCP01 health monitor.
+* DCP01 application health endpoint.
+* DCP01 network connectivity.
+* DCP01 maintenance activity.
+* DCP01 pool configuration.
+* F5 monitor timeout or interval configuration.
+
+A planned DCP01 outage could potentially cause the entire application VIP to fail over to DR even when DCP02 and DCP03 remain healthy.
+
+⸻
+
+h1. 10. Current-State PROD / DR Reference Architecture
+
+The following represents the current logical configuration.
+
+{code}
+Application DNS / Entry Point
+|
+v
+PROD / DR Routing
+|
++–––––––+–––––––+
+|                             |
+v                             v
+PROD VIP                       DR VIP
+|                             |
+|                             |
+Default Pool: DCP01           Default Pool: DCP01
+|                             |
+v                             v
+URI Routing Policy            URI Routing Policy
+|                             |
++———+———+          +––––+———+
+|         |         |          |        |         |
+v         v         v          v        v         v
+/dcp01    /dcp02    /dcp03     /dcp01   /dcp02   /dcp03
+|         |         |          |        |         |
+v         v         v          v        v         v
+DCP01      DCP02     DCP03      DCP01    DCP02     DCP03
+Pool       Pool      Pool        Pool     Pool      Pool
+{code}
+
+h3. PROD
+
+{code}
+PROD VIP
+|
++– Default Pool –> DCP01 Pool
+|
++– /dcp01 –> DCP01 Pool
+|
++– /dcp02 –> DCP02 Pool
+|
++– /dcp03 –> DCP03 Pool
+{code}
+
+h3. DR
+
+{code}
+DR VIP
+|
++– Default Pool –> DCP01 Pool
+|
++– /dcp01 –> DCP01 Pool
+|
++– /dcp02 –> DCP02 Pool
+|
++– /dcp03 –> DCP03 Pool
+{code}
+
+⸻
+
+h1. 11. Current Configuration Decision
+
+The following configuration decision is currently implemented:
+
+{panel:title=Current Configuration Decision|borderStyle=solid|borderColor=#4C9AFF|bgColor=#DEEBFF}
+DCP01 is configured as the Default Pool for the F5 Virtual Server.
+
+The existing URI-based routing for DCP01, DCP02 and DCP03 remains unchanged.
+{panel}
+
+The change was introduced to address the PROD/DR automatic failover behavior observed when the Virtual Server did not have a Default Pool.
+
+⸻
+
+h1. 12. Important Limitation
+
+The current configuration should not be interpreted as meaning that DCP01 represents the health of the complete DCP application.
+
+For example:
+
+{code}
+DCP01 = UP
+DCP02 = DOWN
+DCP03 = DOWN
+{code}
+
+can still result in:
+
+{code}
+PROD VIP = UP
+No site-level failover
+{code}
+
+because DCP01 remains healthy.
+
+Therefore, the current design uses DCP01 as the primary availability reference for the Virtual Server but does not aggregate DCP01, DCP02 and DCP03 into a single application-health decision.
+
+⸻
+
+h1. 13. Future Validation Checklist
+
+If the F5 configuration or failover architecture is changed in the future, validate the following behaviors.
+
+|| Test || Expected Result ||
+| DCP01, DCP02 and DCP03 healthy | PROD VIP remains available |
+| All DCP01 members stopped | PROD VIP becomes unavailable and DR failover occurs |
+| All DCP02 members stopped | DCP02 traffic impacted, but no site-level failover |
+| All DCP03 members stopped | DCP03 traffic impacted, but no site-level failover |
+| DCP02 and DCP03 stopped while DCP01 remains healthy | PROD VIP remains available |
+| DCP01 stopped while DCP02 and DCP03 remain healthy | PROD to DR failover occurs |
+| PROD unavailable and DR healthy | Traffic moves to DR |
+| PROD restored | Validate expected failback behavior based on the configured F5 design |
+
+⸻
+
+h1. 14. Change Reference
+
+h3. Previous State
+
+{code}
+Default Pool = None
+{code}
+
+h3. Current State
+
+{code}
+Default Pool = DCP01 Pool
+{code}
+
+h3. URI Routing
+
+{code}
+/dcp01 –> DCP01 Pool
+/dcp02 –> DCP02 Pool
+/dcp03 –> DCP03 Pool
+{code}
+
+h3. Current Failover Dependency
+
+{code}
+DCP01 Default Pool Health
+|
+v
+Virtual Server Availability
+|
+v
+PROD / DR Failover Decision
+{code}
+
+⸻
+
+h1. 15. Final Summary
+
+The DCP application uses URI-based routing behind an F5 Virtual Server for DCP01, DCP02 and DCP03.
+
+Originally, no Default Pool was configured.
+
+During active-active PROD/DR operation, automatic failover did not behave as expected.
+
+The configuration was subsequently updated so that DCP01 is configured as the Default Pool.
+
+The URI routing itself remains unchanged.
+
+The key behavior of the current design is:
+
+{panel:title=Current Failover Behavior|borderStyle=solid|borderColor=#36B37E|bgColor=#E3FCEF}
+DCP01 DOWN
+→ Default Pool unavailable
+→ PROD VIP unavailable
+→ PROD to DR failover
+
+DCP02 DOWN and/or DCP03 DOWN while DCP01 remains UP
+→ PROD VIP remains available
+→ No overall site-level failover
+{panel}
+
+This document should be retained as the reference for the current F5 DCP PROD/DR configuration and failover behavior.
+
+This is the full-page version rather than a partial section, so you can copy the entire block into Confluence in one go.
