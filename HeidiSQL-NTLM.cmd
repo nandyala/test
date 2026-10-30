@@ -13,6 +13,10 @@ rem Full DNS domain names, for the network monitor
 set "PROD_DNS=abcd.com"
 set "PAT_DNS=p-abcd.com"
 set "SQLUSER=%USERNAME%"
+rem HeidiSQL pings each open session with SELECT 1 every this many seconds, keeping the connection alive
+set "KEEPALIVE=10"
+rem The network monitor checks the domain and SQL Servers every this many seconds
+set "MONITOR_INTERVAL=10"
 set "SESSIONS=HKCU\Software\HeidiSQL\Servers"
 
 rem Find heidisql.exe: next to this script (portable), then the default install folders
@@ -67,7 +71,7 @@ if errorlevel 1 exit /b 1
 
 echo.
 echo Watching the network until HeidiSQL closes. Ctrl+C stops watching, HeidiSQL keeps running.
-rem Runs the PowerShell part at the end of this file; it reads DNSDOMAIN and SERVERLIST
+rem Runs the PowerShell part at the end of this file; it reads DNSDOMAIN, SERVERLIST and MONITOR_INTERVAL
 set "SELF=%~f0"
 powershell -NoProfile -Command "$s = Get-Content -LiteralPath $env:SELF -Raw; Invoke-Expression ($s -split '(?m)^#MONITOR#\r?$')[-1]"
 exit /b
@@ -93,6 +97,7 @@ reg add "%KEY%" /v Port /t REG_SZ /d 0 /f >nul
 reg add "%KEY%" /v NetType /t REG_DWORD /d 4 /f >nul
 reg add "%KEY%" /v WindowsAuth /t REG_DWORD /d 1 /f >nul
 if defined LIB reg add "%KEY%" /v Library /t REG_SZ /d "%LIB%" /f >nul
+reg add "%KEY%" /v KeepAlive /t REG_DWORD /d %KEEPALIVE% /f >nul
 set /a COUNT+=1
 exit /b
 
@@ -100,8 +105,8 @@ exit /b
 rem ===== Below is PowerShell, never run by cmd (every path above ends in exit /b) =====
 #MONITOR#
 # Checks every few seconds whether the domain and the SQL Servers are reachable, prints and logs
-# every up/down change, and ends when HeidiSQL exits. Windows PowerShell 5.1, no admin rights needed.
-$Interval = 10
+# every check, beeps when one goes down, and ends when HeidiSQL exits. Windows PowerShell 5.1, no admin rights needed.
+$Interval = [int]$env:MONITOR_INTERVAL
 $TimeoutMs = 2000
 $Log = Join-Path $env:TEMP 'heidisql-netmonitor.log'
 
@@ -157,23 +162,16 @@ while ($true) {
   if (Get-Process -Name heidisql -ErrorAction SilentlyContinue) {
     $seenHeidi = $true
   } elseif ($seenHeidi) {
-    Write-Host ''
     Write-Host (Write-Log 'HeidiSQL closed, monitor stopped.')
     break
   }
 
-  $ok = 0
   foreach ($t in $targets) {
     $r = Test-Target $t
-    if ($r.Status -eq 'OK') { $ok++ }
-    if ($last[$t.Name] -ne $r.Status) {
-      $color = if ($r.Status -eq 'OK') { 'Green' } else { 'Red' }
-      Write-Host ("`r" + (' ' * 70) + "`r") -NoNewline
-      Write-Host (Write-Log ('{0,-10} {1} ({2})' -f $r.Status, $t.Name, $r.Detail)) -ForegroundColor $color
-      if ($last.ContainsKey($t.Name) -and $r.Status -ne 'OK') { [console]::Beep(800, 300) }
-      $last[$t.Name] = $r.Status
-    }
+    $color = if ($r.Status -eq 'OK') { 'Green' } else { 'Red' }
+    Write-Host (Write-Log ('{0,-10} {1} ({2})' -f $r.Status, $t.Name, $r.Detail)) -ForegroundColor $color
+    if ($last.ContainsKey($t.Name) -and $last[$t.Name] -eq 'OK' -and $r.Status -ne 'OK') { [console]::Beep(800, 300) }
+    $last[$t.Name] = $r.Status
   }
-  Write-Host ("`r{0}  {1}/{2} reachable, next check in {3} s " -f (Get-Date -Format 'HH:mm:ss'), $ok, $targets.Count, $Interval) -NoNewline
   Start-Sleep -Seconds $Interval
 }
