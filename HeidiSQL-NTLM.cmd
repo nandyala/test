@@ -128,9 +128,9 @@ if ($env:SERVERLIST -and (Test-Path -LiteralPath $env:SERVERLIST)) {
   }
 }
 
-# Tests every address the name resolves to: a name with one unreachable address (AG listener,
-# round-robin or split DNS) works only sometimes, depending on which address the driver tries first.
-# Status: OK = all addresses answer, PARTIAL = some do, NO CONNECT = none, DNS FAIL = name does not resolve.
+# Domain controller check: tries the addresses the domain name resolves to until one answers,
+# so it makes one connection per check (testing all DCs every round looks like a scan).
+# Status: OK = a DC answers, NO CONNECT = none of them, DNS FAIL = name does not resolve.
 function Test-Target($t) {
   try {
     $ips = @([System.Net.Dns]::GetHostAddresses($t.HostName))
@@ -138,8 +138,9 @@ function Test-Target($t) {
     $ips = @()
   }
   if ($ips.Count -eq 0) { return @{ Status = 'DNS FAIL'; Detail = 'name does not resolve' } }
-  $good = 0
-  $details = foreach ($ip in $ips) {
+  $tried = 0
+  foreach ($ip in $ips) {
+    $tried++
     $client = New-Object System.Net.Sockets.TcpClient($ip.AddressFamily)
     $watch = [System.Diagnostics.Stopwatch]::StartNew()
     try {
@@ -150,15 +151,10 @@ function Test-Target($t) {
       $client.Dispose()
     }
     if ($connected) {
-      $good++
-      "$ip $($watch.ElapsedMilliseconds) ms"
-    } else {
-      "$ip NO ANSWER"
+      return @{ Status = 'OK'; Detail = "$ip port $($t.Port), $($watch.ElapsedMilliseconds) ms, $tried of $($ips.Count) addresses tried" }
     }
   }
-  $status = 'OK'
-  if ($good -eq 0) { $status = 'NO CONNECT' } elseif ($good -lt $ips.Count) { $status = 'PARTIAL' }
-  return @{ Status = $status; Detail = "port $($t.Port): " + ($details -join ', ') }
+  return @{ Status = 'NO CONNECT'; Detail = "port $($t.Port), none of $($ips.Count) addresses answered" }
 }
 
 # Status: CONNECTED = HeidiSQL has an open connection, CONNECTING = HeidiSQL is trying (SynSent:
