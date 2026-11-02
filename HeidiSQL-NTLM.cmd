@@ -104,14 +104,19 @@ exit /b
 
 rem ===== Below is PowerShell, never run by cmd (every path above ends in exit /b) =====
 #MONITOR#
-# Checks every few seconds whether the domain and the SQL Servers are reachable, prints and logs
-# every check, beeps when one goes down, and ends when HeidiSQL exits. Windows PowerShell 5.1, no admin rights needed.
+# Checks every few seconds whether the domain controller is reachable and whether HeidiSQL's
+# connections to the SQL Servers are open, prints and logs every check, beeps when a connection
+# drops, and ends when HeidiSQL exits. Windows PowerShell 5.1, no admin rights needed.
 $Interval = [int]$env:MONITOR_INTERVAL
-$TimeoutMs = 2000
+# Long enough for TCP retransmits (Windows resends a lost SYN after ~3 s, then ~6 s more):
+# a connect time near 3000 or 9000 ms means lost packets on the way to the server.
+$TimeoutMs = 10000
 $Log = Join-Path $env:TEMP 'heidisql-netmonitor.log'
 
-# Domain: a domain controller answering LDAP. SQL Servers: their SQL port, like HeidiSQL connects.
-$targets = @([pscustomobject]@{ Name = "$env:DNSDOMAIN (domain controller)"; HostName = $env:DNSDOMAIN; Port = 389 })
+# Domain: a domain controller answering LDAP (active test connection).
+# SQL Servers: only watched passively, through HeidiSQL's own TCP connections. Repeated test
+# connections to several SQL ports look like a port scan, and got this PC blocked within seconds.
+$targets = @([pscustomobject]@{ Name = "$env:DNSDOMAIN (domain controller)"; HostName = $env:DNSDOMAIN; Port = 389; Passive = $false })
 if ($env:SERVERLIST -and (Test-Path -LiteralPath $env:SERVERLIST)) {
   foreach ($line in Get-Content -LiteralPath $env:SERVERLIST) {
     $line = $line.Trim()
@@ -119,33 +124,62 @@ if ($env:SERVERLIST -and (Test-Path -LiteralPath $env:SERVERLIST)) {
     $parts = $line -split '[,\s]+'
     $port = 1433
     if ($parts.Count -gt 1) { $port = [int]$parts[1] }
-    $targets += [pscustomobject]@{ Name = $parts[0]; HostName = $parts[0]; Port = $port }
+    $targets += [pscustomobject]@{ Name = $parts[0]; HostName = $parts[0]; Port = $port; Passive = $true }
   }
 }
 
+# Tests every address the name resolves to: a name with one unreachable address (AG listener,
+# round-robin or split DNS) works only sometimes, depending on which address the driver tries first.
+# Status: OK = all addresses answer, PARTIAL = some do, NO CONNECT = none, DNS FAIL = name does not resolve.
 function Test-Target($t) {
   try {
-    $ips = [System.Net.Dns]::GetHostAddresses($t.HostName)
+    $ips = @([System.Net.Dns]::GetHostAddresses($t.HostName))
   } catch {
     $ips = @()
   }
-  # Prefer IPv4, VPNs often do not route IPv6
-  $ip = $ips | Where-Object { $_.AddressFamily -eq 'InterNetwork' } | Select-Object -First 1
-  if (-not $ip) { $ip = $ips | Select-Object -First 1 }
-  if (-not $ip) { return @{ Status = 'DNS FAIL'; Detail = 'name does not resolve' } }
-  $client = New-Object System.Net.Sockets.TcpClient($ip.AddressFamily)
-  $watch = [System.Diagnostics.Stopwatch]::StartNew()
+  if ($ips.Count -eq 0) { return @{ Status = 'DNS FAIL'; Detail = 'name does not resolve' } }
+  $good = 0
+  $details = foreach ($ip in $ips) {
+    $client = New-Object System.Net.Sockets.TcpClient($ip.AddressFamily)
+    $watch = [System.Diagnostics.Stopwatch]::StartNew()
+    try {
+      $connected = $client.ConnectAsync($ip, $t.Port).Wait($TimeoutMs) -and $client.Connected
+    } catch {
+      $connected = $false
+    } finally {
+      $client.Dispose()
+    }
+    if ($connected) {
+      $good++
+      "$ip $($watch.ElapsedMilliseconds) ms"
+    } else {
+      "$ip NO ANSWER"
+    }
+  }
+  $status = 'OK'
+  if ($good -eq 0) { $status = 'NO CONNECT' } elseif ($good -lt $ips.Count) { $status = 'PARTIAL' }
+  return @{ Status = $status; Detail = "port $($t.Port): " + ($details -join ', ') }
+}
+
+# Status: CONNECTED = HeidiSQL has an open connection, CONNECTING = HeidiSQL is trying (SynSent:
+# packets dropped on the way), NOT OPEN = no HeidiSQL connection, DNS FAIL = name does not resolve.
+function Get-HeidiConnection($t) {
   try {
-    $connected = $client.ConnectAsync($ip, $t.Port).Wait($TimeoutMs) -and $client.Connected
+    $ips = @([System.Net.Dns]::GetHostAddresses($t.HostName) | ForEach-Object { $_.IPAddressToString })
   } catch {
-    $connected = $false
-  } finally {
-    $client.Dispose()
+    $ips = @()
   }
-  if ($connected) {
-    return @{ Status = 'OK'; Detail = "$ip port $($t.Port), $($watch.ElapsedMilliseconds) ms" }
+  if ($ips.Count -eq 0) { return @{ Status = 'DNS FAIL'; Detail = 'name does not resolve' } }
+  $pids = @(Get-Process -Name heidisql -ErrorAction SilentlyContinue | ForEach-Object { $_.Id })
+  $conns = @(Get-NetTCPConnection -RemotePort $t.Port -ErrorAction SilentlyContinue |
+    Where-Object { ($pids -contains $_.OwningProcess) -and ($ips -contains $_.RemoteAddress) })
+  $open = @($conns | Where-Object { $_.State -eq 'Established' }).Count
+  $where = "$($ips -join ', ') port $($t.Port)"
+  if ($open -gt 0) { return @{ Status = 'CONNECTED'; Detail = "$open HeidiSQL connection(s) to $where" } }
+  if ($conns.Count -gt 0) {
+    return @{ Status = 'CONNECTING'; Detail = "$where, state " + (($conns | ForEach-Object { $_.State }) -join ', ') }
   }
-  return @{ Status = 'NO CONNECT'; Detail = "$ip port $($t.Port), no answer within $TimeoutMs ms" }
+  return @{ Status = 'NOT OPEN'; Detail = "no HeidiSQL connection to $where" }
 }
 
 function Write-Log($text) {
@@ -167,10 +201,11 @@ while ($true) {
   }
 
   foreach ($t in $targets) {
-    $r = Test-Target $t
-    $color = if ($r.Status -eq 'OK') { 'Green' } else { 'Red' }
+    $r = if ($t.Passive) { Get-HeidiConnection $t } else { Test-Target $t }
+    $good = $r.Status -in 'OK', 'CONNECTED'
+    $color = if ($good) { 'Green' } elseif ($r.Status -eq 'NOT OPEN') { 'Gray' } else { 'Red' }
     Write-Host (Write-Log ('{0,-10} {1} ({2})' -f $r.Status, $t.Name, $r.Detail)) -ForegroundColor $color
-    if ($last.ContainsKey($t.Name) -and $last[$t.Name] -eq 'OK' -and $r.Status -ne 'OK') { [console]::Beep(800, 300) }
+    if ($last[$t.Name] -in 'OK', 'CONNECTED' -and -not $good) { [console]::Beep(800, 300) }
     $last[$t.Name] = $r.Status
   }
   Start-Sleep -Seconds $Interval
